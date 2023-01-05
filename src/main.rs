@@ -36,28 +36,40 @@ impl eframe::App for MoveBaseGUI {
             ui.heading("Dummy Robot Controller");
 
             ui.horizontal(|ui| {
-                if ui.button("Down").clicked() {
+                if ui.button(" BACK ").clicked() {
                     self.x -= 0.1;
                     dummy_send_velocity_task()
                 }
-                if ui.button("Up").clicked() {
+                if ui.button("FORWARD").clicked() {
                     self.x += 0.1;
                     dummy_send_velocity_task()
                 }
             });
-            ui.add(egui::Slider::new(&mut self.x, -1f64..=1f64).text("X"));
+            ui.horizontal(|ui| {
+                ui.add(egui::Slider::new(&mut self.x, -1f64..=1f64).text("x"));
+                if ui.button("Zero").clicked() {
+                    self.x = 0.;
+                    dummy_send_velocity_task()
+                }
+            });
 
             ui.horizontal(|ui| {
-                if ui.button("Left").clicked() {
+                if ui.button("LEFT").clicked() {
                     self.y -= 0.1;
                     dummy_send_velocity_task()
                 }
-                if ui.button("Right").clicked() {
+                if ui.button("RIGHT").clicked() {
                     self.y += 0.1;
                     dummy_send_velocity_task()
                 }
             });
-            ui.add(egui::Slider::new(&mut self.y, -1f64..=1f64).text("Y"));
+            ui.horizontal(|ui| {
+                ui.add(egui::Slider::new(&mut self.y, -1f64..=1f64).text("y"));
+                if ui.button("Zero").clicked() {
+                    self.y = 0.;
+                    dummy_send_velocity_task()
+                }
+            });
 
             ui.horizontal(|ui| {
                 if ui.button("CCW").clicked() {
@@ -69,7 +81,13 @@ impl eframe::App for MoveBaseGUI {
                     dummy_send_velocity_task()
                 }
             });
-            ui.add(egui::Slider::new(&mut self.theta, -1f64..=1f64).text("THETA"));
+            ui.horizontal(|ui| {
+                ui.add(egui::Slider::new(&mut self.theta, -1f64..=1f64).text("θ"));
+                if ui.button("Zero").clicked() {
+                    self.theta = 0.;
+                    dummy_send_velocity_task()
+                }
+            });
         });
     }
 }
